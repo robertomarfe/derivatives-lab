@@ -1,5 +1,5 @@
 import { CONTENT } from '../content.js';
-import * as F from '../core/finance.js';
+import * as F from '../core/finance-v111.js';
 import { linspace, mean } from '../core/special.js';
 import { lineChart, histogram } from '../core/charts.js';
 import { field, table, metric, interpretation, qs, getn, money, num } from '../core/ui.js';
@@ -20,7 +20,6 @@ export function renderMertonJump(root){
       r.innerHTML=section(sub,controls,`<div id="mj-dyn" class="metric-grid"></div><div id="mj-dyn-note"></div>`);
       const update=safeUpdate(r,()=>{
         const lam=getn('mj-lam'),mm=getn('mj-m'),dd=getn('mj-d'),T=getn('mj-T'),S=getn('mj-S'),rr=getn('mj-r'),sig=getn('mj-sig');
-        // The zero-intensity limit is admissible; use the pricing function as a full-domain check.
         F.mertonCallPrice(S,S,rr,T,sig,lam,mm,dd,'eq35');
         const k=F.jumpCompensator(mm,dd);
         qs('#mj-dyn',r).innerHTML=metric('Jump compensator $k$',num(k,6))+metric('Expected jump count $\\lambda T$',num(lam*T,4))+metric('$E[Y]$',num(1+k,6))+metric('Risk-neutral drift adjustment $-\\lambda k$',num(-lam*k,6));
@@ -46,7 +45,7 @@ export function renderMertonJump(root){
       r.innerHTML=section(sub,`${controls}<button id="mj-smile-run" class="primary full">Compute smile</button>`,`${chartBox('mj-smile','Merton-implied volatility')}<div id="mj-smile-note"></div>`);
       qs('#mj-smile-run',r).onclick=safeUpdate(r,()=>{
         const S=getn('mj-S'),rr=getn('mj-r'),T=getn('mj-T'),sig=getn('mj-sig'),lam=getn('mj-lam'),mm=getn('mj-m'),dd=getn('mj-d'),K=linspace(.7*S,1.3*S,25),iv=K.map(k=>{const p=F.mertonCallPrice(S,k,rr,T,sig,lam,mm,dd,'eq35').callPrice;return 100*F.impliedVolatility(p,S,k,rr,T,0,'call').sigma;});
-        lineChart(qs('#mj-smile',r),[{name:'Merton implied volatility',x:K,y:iv}],{xLabel:'Strike K',yLabel:'Implied volatility (%)'});
+        lineChart(qs('#mj-smile',r),[{name:'Merton implied volatility',x:K,y:iv},{name:'Black-Scholes diffusion σ',x:K,y:K.map(()=>100*sig)}],{xLabel:'Strike K',yLabel:'Implied volatility (%)'});
         qs('#mj-smile-note',r).innerHTML=interpretation('$\\lambda=0$ removes the jump component and collapses the Merton price to the Black-Scholes diffusion benchmark. For positive jump intensity, the smile is obtained by pricing under Merton and then inverting Black-Scholes strike by strike.');
       });
       qs('#mj-smile-run',r).click();

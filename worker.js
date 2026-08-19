@@ -1,4 +1,4 @@
-import { simulateGbmPaths, monteCarloEuropeanPrice, simulateHedging, simulateHedgingPath, simulateHestonPaths, simulateMertonPaths } from './core/finance.js';
+import { simulateGbmPaths, monteCarloEuropeanPrice, simulateHedging, simulateHedgingPath, simulateHestonPaths, simulateMertonPaths } from './core/finance-v111.js';
 self.onmessage = (ev) => {
   const {id,type,args} = ev.data;
   try {

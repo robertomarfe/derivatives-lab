@@ -27,7 +27,7 @@ export function tabbed(moduleId,root,items,renderTab){
 }
 export function controlGrid(inner){return `<div class="control-grid">${inner}</div>`}
 export function outputGrid(inner){return `<div class="metric-grid">${inner}</div>`}
-export function chartBox(id,title=''){return `<section class="chart-card" aria-labelledby="${id}-title">${title?`<div id="${id}-title" class="chart-title">${escapeHtml(title)}</div>`:''}<div id="${id}" class="chart" role="img" tabindex="0" aria-label="${escapeHtml(title||'Chart')}"></div></section>`}
+export function chartBox(id,title=''){return `<section class="chart-card" aria-labelledby="${id}-title">${title?`<div id="${id}-title" class="chart-title">${escapeHtml(title)}</div>`:''}<div id="${id}" class="chart" role="img" tabindex="0" aria-label="${escapeHtml(title||'Chart')}"><div class="chart-placeholder">Run the calculation or change an input to populate this chart.</div></div></section>`}
 export function section(sub,controls,outputs,extra=''){return `${theoryCard(sub)}<div class="runtime-error-slot" aria-live="polite"></div><div class="lab-layout"><section class="panel"><div class="panel-title">Inputs</div>${controls}</section><section class="workspace">${outputs}${extra}</section></div>`}
 export function bindNums(root,ids,fn){ids.forEach(id=>root.querySelector(`#${id}`)?.addEventListener('input',fn));}
 export function loading(btn,on,label='Running…'){if(!btn)return;btn.disabled=on;btn.setAttribute('aria-busy',String(on));btn.dataset.old??=btn.textContent;btn.textContent=on?label:btn.dataset.old;}
