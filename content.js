@@ -13,8 +13,8 @@ export const CONTENT = {
       "submodules": {
         "payoff": {
           "title": "Payoff builder",
-          "theory": "A forward fixes today the price F₀,T at which the underlying will be exchanged at T. At expiration, a long forward pays S_T − F₀,T and a short forward pays F₀,T − S_T. A forward entered at its fair price has zero value at inception, so its expiration payoff is also its profit. Once the underlying is added, the plotted quantity is a terminal payoff/value unless the initial stock cost is also carried to T and subtracted.",
-          "how_to": "Set F₀,T and the quantities q_S and q_F. Positive q_F is long and negative q_F is short. Move the S_T inspector to verify the payoff of each leg and the combined position.",
+          "theory": "A forward fixes today the price $F_{0,T}$ at which the underlying will be exchanged at $T$. At expiration, a long forward pays $S_T-F_{0,T}$ and a short forward pays $F_{0,T}-S_T$. A forward entered at its fair price has zero value at inception, so its expiration payoff is also its profit. Once the underlying is added, the plotted quantity is a terminal payoff/value unless the initial stock cost is also carried to $T$ and subtracted.",
+          "how_to": "Set $F_{0,T}$ and the quantities $q_S$ and $q_F$. Positive $q_F$ is long and negative $q_F$ is short. Move the $S_T$ inspector to verify the payoff of each leg and the combined position.",
           "formulas": [
             "\\Pi_T^{long}=S_T-F_{0,T}",
             "\\Pi_T^{short}=F_{0,T}-S_T"
@@ -22,7 +22,7 @@ export const CONTENT = {
         },
         "pricing": {
           "title": "Fair forward price and arbitrage",
-          "theory": "With a continuously compounded risk-free rate r and continuous dividend yield δ, no-arbitrage implies F₀,T = S₀ exp[(r−δ)T]. The lecture derives this relation with a tailed stock position exp(−δT), whose reinvested dividends produce one share at T. A market forward above the no-arbitrage price gives a cash-and-carry opportunity; a price below it gives reverse cash-and-carry.",
+          "theory": "With a continuously compounded risk-free rate $r$ and continuous dividend yield $\\delta$, no-arbitrage implies $F_{0,T}=S_0e^{(r-\\delta)T}$. The lecture derives this relation with a tailed stock position $e^{-\\delta T}$, whose reinvested dividends produce one share at $T$. A market forward above the no-arbitrage price gives a cash-and-carry opportunity; a price below it gives reverse cash-and-carry.",
           "how_to": "Choose S₀, r, δ and T to compute the fair forward. Then enter a hypothetical market forward. The lab reports whether the price is fair and, if not, the direction and maturity profit of the arbitrage trade.",
           "formulas": [
             "F_{0,T}=S_0 e^{(r-\\delta)T}"
@@ -69,8 +69,8 @@ export const CONTENT = {
         },
         "cross_hedge": {
           "title": "Cross hedging",
-          "theory": "Cross hedging uses a derivative on one asset to hedge exposure to another asset. The lecture estimates the linear relation ΔS = a + h*ΔF + ε. The minimum-variance hedge ratio is h* = ρ σ_S/σ_F and hedge effectiveness is R² = ρ². The number of contracts is N* = h*Q_A/Q_F; the economic exposure determines whether those contracts should be long or short.",
-          "how_to": "Use the jet-fuel/heating-oil observations to reproduce the lecture regression, or enter σ_S, σ_F and ρ directly. Then specify the exposure size Q_A and futures contract size Q_F and compare N* with its nearest whole-contract implementation.",
+          "theory": "Cross hedging uses a derivative on one asset to hedge exposure to another asset. The lecture estimates the linear relation $\\Delta S=a+h^*\\Delta F+\\epsilon$. The minimum-variance hedge ratio is $h^*=\\rho\\sigma_S/\\sigma_F$ and hedge effectiveness is $R^2=\\rho^2$. The contract magnitude is $|N^*|=|h^*|Q_A/Q_F$. The futures direction depends jointly on the economic exposure and the sign of $h^*$; with negative correlation it can reverse relative to the usual positive-correlation example.",
+          "how_to": "Use the jet-fuel/heating-oil observations to reproduce the lecture regression, or enter $\\sigma_S$, $\\sigma_F$ and $\\rho$ directly. Then specify $Q_A$ and $Q_F$. The lab reports the signed futures position, its magnitude, and the nearest whole-contract implementation. The original 15 observations reproduce the lecture regression; using only the displayed rounded summary statistics can produce a slightly different contract count.",
           "formulas": [
             "h^*=\\rho\\frac{\\sigma_S}{\\sigma_F}",
             "R^2=\\rho^2",
@@ -120,14 +120,14 @@ export const CONTENT = {
         "custom": {
           "title": "Custom portfolio",
           "theory": "Any static strategy in this lab is the sum of its component payoffs. Quantity determines scale and its sign determines long versus short. This linear aggregation is useful for testing whether two apparently different constructions generate the same terminal payoff.",
-          "how_to": "Choose the number of legs, instrument, long/short sign, quantity and strike. Check each leg before interpreting the aggregate payoff.",
+          "how_to": "Edit the three available legs. For each leg choose the instrument, long/short sign through quantity, and strike when the leg is an option. Check each leg before interpreting the aggregate payoff.",
           "formulas": [
             "\\Pi_T=\\sum_i q_i\\,\\Pi_T^{(i)}"
           ]
         },
         "profit": {
           "title": "Payoff versus profit",
-          "theory": "A payoff diagram ignores the time-0 premium paid or received. To obtain profit at T, the net initial cost must be carried to T and subtracted from terminal payoff. This distinction matters particularly for option strategies because option premiums are generally non-zero at inception.",
+          "theory": "A payoff diagram ignores the time-0 premium paid or received. To obtain profit at $T$, the net initial cost must be carried to $T$ and subtracted from terminal payoff. This distinction matters particularly for option strategies because option premiums are generally non-zero at inception.",
           "how_to": "Open the profit section only after the payoff is understood. Enter the net time-0 cost, r and T, then compare the payoff and profit curves.",
           "formulas": [
             "Profit_T=Payoff_T-C_0e^{rT}"
@@ -166,7 +166,7 @@ export const CONTENT = {
       "submodules": {
         "tree": {
           "title": "Tree, replication, and exercise",
-          "theory": "The binomial model lets the stock move to only two values per period. At each node the option can be replicated by Δ shares and a bond position B. No-arbitrage therefore equates the option value to the cost of the replicating portfolio. Multi-period prices are obtained by working backward through a recombining tree. For an American option, node value is the maximum of intrinsic value and continuation value.",
+          "theory": "The binomial model lets the stock move to only two values per period. At each node the option can be replicated by $\\Delta$ shares and a bond position $B$. No-arbitrage therefore equates the option value to the cost of the replicating portfolio. Multi-period prices are obtained by working backward through a recombining tree. For an American option, node value is the maximum of intrinsic value and continuation value.",
           "how_to": "Choose option type, exercise style and n. For small n, hover over nodes to read S, option value, continuation value, intrinsic value, Δ and B. Diamond markers indicate nodes where immediate exercise is optimal.",
           "formulas": [
             "p^*=\\frac{e^{(r-\\delta)h}-d}{u-d}",
@@ -216,7 +216,7 @@ export const CONTENT = {
       "submodules": {
         "greeks": {
           "title": "Price and Greeks",
-          "theory": "Black-Scholes values a European option using S, K, σ, r, T and the continuous dividend yield δ. Delta is first-order sensitivity to S and Gamma is second-order sensitivity. The lecture also reports elasticity, Vega, Theta, Rho and Psi using specific scaling conventions.",
+          "theory": "Black-Scholes values a European option using $S$, $K$, $\\sigma$, $r$, $T$ and the continuous dividend yield $\\delta$. Delta is first-order sensitivity to $S$ and Gamma is second-order sensitivity. The lecture also reports elasticity, Vega, Theta, Rho and Psi using specific scaling conventions.",
           "how_to": "Change one input at a time and watch both price and Greeks. Compare the option value before expiration with the terminal payoff curve.",
           "formulas": [
             "C=S e^{-\\delta T}N(d_1)-Ke^{-rT}N(d_2)",
@@ -225,7 +225,7 @@ export const CONTENT = {
         },
         "gbm": {
           "title": "GBM paths",
-          "theory": "Under the physical measure P, the stock drift is μ. Under the risk-neutral measure Q, the ex-dividend stock drift becomes r−δ. The diffusion volatility σ is unchanged by the change of measure. Keeping P and Q separate prevents using a physical expected return in an arbitrage-free pricing expectation.",
+          "theory": "Under the physical measure $P$, the stock drift is $\\mu$. Under the risk-neutral measure $Q$, the ex-dividend stock drift becomes $r-\\delta$. The diffusion volatility $\\sigma$ is unchanged by the change of measure. Keeping $P$ and $Q$ separate prevents using a physical expected return in an arbitrage-free pricing expectation.",
           "how_to": "Switch between P and Q, keep all other inputs fixed, and compare path distributions. Use a fixed seed when you want parameter comparisons to use the same random shocks.",
           "formulas": [
             "dS_t=\\mu S_tdt+\\sigma S_tdW_t^P",
@@ -283,7 +283,7 @@ export const CONTENT = {
         "path": {
           "title": "One path step-by-step",
           "theory": "The hedge is self-financing apart from the initial option premium and explicit transaction costs. At each rebalancing date the bank account finances the change in stock and, for delta-gamma hedging, the change in the second option.",
-          "how_to": "Use one fixed simulated path and follow S_t, hedge quantities, transaction costs and bank balance date by date. Switch strategies without changing the seed to isolate the hedge-design effect.",
+          "how_to": "Use one fixed simulated path and inspect selected rebalancing dates for $S_t$, the stock hedge $q_t^S$, the second-option quantity $q_t^2$, explicit transaction costs and the bank balance. Switch strategies without changing the seed to isolate the hedge-design effect.",
           "formulas": [
             "q_t^2=\\Gamma_t^1/\\Gamma_t^2",
             "q_t^S=\\Delta_t^1-\\Delta_t^2q_t^2"
@@ -334,7 +334,7 @@ export const CONTENT = {
       "submodules": {
         "iv": {
           "title": "Implied volatility",
-          "theory": "Implied volatility is the value of σ that makes the Black-Scholes price equal the observed market option price. It is therefore an inversion of the pricing formula, not a separate historical volatility estimator.",
+          "theory": "Implied volatility is the value of $\\sigma$ that makes the Black-Scholes price equal the observed market option price. It is therefore an inversion of the pricing formula, not a separate historical volatility estimator.",
           "how_to": "Enter S, K, r, δ, T and the observed option price. The solver returns σ such that the Black-Scholes price matches the input price. Use the lecture example to verify 31.73%.",
           "formulas": [
             "C^{mkt}=BSCall(S,K,\\sigma^{IV},r,T,\\delta)"
@@ -343,7 +343,7 @@ export const CONTENT = {
         "surface": {
           "title": "Volatility surface",
           "theory": "If Black-Scholes were exact with constant σ, implied volatility would be flat across strike and maturity. The lecture shows instead smile/smirk patterns and time variation. A volatility surface organizes implied volatilities as Σ(T,K).",
-          "how_to": "Load or edit option prices across strikes and maturities, invert each price, and inspect slices or the three-dimensional surface. Treat missing or inconsistent prices as data problems rather than forcing a volatility value.",
+          "how_to": "Use the flat Black-Scholes benchmark or paste supplied call prices across the fixed strike-maturity grid. Invert each price and inspect both the strike-maturity heatmap and the maturity slices. Treat missing, non-finite or arbitrage-inconsistent prices as data problems rather than forcing a volatility value.",
           "formulas": [
             "\\Sigma=\\Sigma(T,K)"
           ]
@@ -351,7 +351,7 @@ export const CONTENT = {
         "vix": {
           "title": "Log contract and VIX",
           "theory": "The log contract links its value to variance. Carr-Madan and Demeterfi-Derman-Kamal-Zou show that its payoff can be replicated with a continuum of out-of-the-money puts and calls. The VIX calculation uses a discrete strike approximation to this option-strip variance formula, with a correction when the forward is not exactly an available strike.",
-          "how_to": "Enter a strip of strikes and OTM option prices around the forward F₀,T. Check K₀ and ΔK_i, then read each strike contribution and the final annualized variance estimate.",
+          "how_to": "Use the dense Black-Scholes benchmark or paste a supplied single-maturity strip as rows of strike, put price and call price. The lab computes $F_{0,T}$ from the benchmark spot/rate inputs, identifies $K_0$, applies the lecture discrete strike weights, and reports the annualized variance estimate. It deliberately does not add exchange-production filtering or maturity-interpolation rules that are not shown in the course material.",
           "formulas": [
             "\\sigma^2\\approx\\frac{2e^{rT}}{T}\\sum_i\\frac{\\Delta K_i}{K_i^2}Q(K_i)-\\frac{1}{T}\\left(\\frac{F_{0,T}}{K_0}-1\\right)^2"
           ]
@@ -389,7 +389,7 @@ export const CONTENT = {
       "submodules": {
         "dynamics": {
           "title": "Dynamics and parameters",
-          "theory": "Heston replaces constant Black-Scholes variance with a square-root mean-reverting process ν_t, which is the instantaneous variance. The stock and variance shocks are correlated by ρ. θ is the long-run mean of variance, k controls mean reversion, σ is the scale parameter (volatility of volatility), and negative ρ can generate negative return skewness and an asymmetric implied-volatility smile. The lecture states the positivity condition 2kθ > σ².",
+          "theory": "Heston replaces constant Black-Scholes variance with a square-root mean-reverting process $\\nu_t$, which is the instantaneous variance. The stock and variance shocks are correlated by $\\rho$. $\\theta$ is the long-run mean of variance, $k$ controls mean reversion, $\\sigma$ is the scale parameter (volatility of the volatility), and negative $\\rho$ can generate negative return skewness and an asymmetric implied-volatility smile. The lecture states the positivity condition $2k\\theta>\\sigma^2$.",
           "how_to": "Change one variance parameter at a time. Use the displayed positivity-condition check as a model diagnostic, then relate ρ and σ to changes in the implied-volatility shape.",
           "formulas": [
             "dS_t=rS_tdt+\\sqrt{\\nu_t}S_tdW_t^S",
@@ -398,7 +398,7 @@ export const CONTENT = {
         },
         "pricing": {
           "title": "Pricing and implied-volatility smile",
-          "theory": "The Heston European call price is written in the lecture as S P₁ − K e^{-rT}P₂, with P₁ and P₂ obtained from Fourier-integral expressions. Because variance is stochastic and correlated with returns, the prices imply a non-flat Black-Scholes volatility curve.",
+          "theory": "The Heston European call price is written in the lecture as $SP_1-Ke^{-rT}P_2$, with $P_1$ and $P_2$ obtained from Fourier-integral expressions. Because variance is stochastic and correlated with returns, the prices imply a non-flat Black-Scholes volatility curve.",
           "how_to": "Choose strikes and Heston parameters, compute call prices, and invert those prices back to Black-Scholes implied volatilities. Compare the resulting curve with a flat volatility benchmark.",
           "formulas": [
             "C=S P_1-Ke^{-rT}P_2"
@@ -443,7 +443,7 @@ export const CONTENT = {
       "submodules": {
         "dynamics": {
           "title": "Dynamics",
-          "theory": "Merton adds a compound-Poisson jump component to Black-Scholes diffusion. N_t counts jumps with intensity λ, while the jump multiplier Y is positive and lognormal in the lecture specification. The drift contains the compensator λk so that the risk-neutral expected return remains consistent with r.",
+          "theory": "Merton adds a compound-Poisson jump component to Black-Scholes diffusion. $N_t$ counts jumps with intensity $\\lambda$, while the jump multiplier $Y$ is positive and lognormal in the lecture specification. The drift contains the compensator $\\lambda k$ so that the risk-neutral expected return remains consistent with $r$.",
           "how_to": "Change λ, m and δ one at a time. Interpret λ as expected jump frequency, m as the mean log jump size and δ as jump-size dispersion.",
           "formulas": [
             "dS_t=(r-\\lambda k)S_tdt+\\sigma S_tdW_t+S_{t-}dQ_t",
@@ -466,7 +466,7 @@ export const CONTENT = {
         },
         "simulation": {
           "title": "Simulation",
-          "theory": "A simulated path combines a continuous Gaussian diffusion with a random number of jumps. Conditional on n jumps over a step, the sum of n log jump sizes is Normal with mean nm and variance nδ².",
+          "theory": "A simulated path combines a continuous Gaussian diffusion with a random number of jumps. The course specification states $\\log Y\\sim N(m,\\delta^2)$. Conditional on $n$ jumps over a step, the sum of the $n$ log jump sizes is therefore Normal with mean $nm$ and variance $n\\delta^2$. The lab uses this implication explicitly so that the simulation convention is tied to the stated jump-size distribution.",
           "how_to": "Use a fixed seed, compare paths and terminal log returns with the Black-Scholes normal benchmark, and check that the mean realized jump count is close to λT in a large simulation.",
           "formulas": []
         }
@@ -516,7 +516,7 @@ export const CONTENT = {
         },
         "known": {
           "title": "Known firm value and firm volatility",
-          "theory": "When V₀ and σ_V are known, Black-Scholes option pricing gives equity value and hence risky debt D₀=V₀−E₀. The physical distance-to-default uses the firm drift α; the risk-neutral default probability uses r instead. The two probabilities answer different questions and should not be mixed.",
+          "theory": "When $V_0$ and $\\sigma_V$ are known, Black-Scholes option pricing gives equity value and hence risky debt $D_0=V_0-E_0$. The physical distance-to-default uses the firm drift $\\alpha$; the risk-neutral default probability uses $r$ instead. The two probabilities answer different questions and should not be mixed.",
           "how_to": "Enter V₀, σ_V, D, r, T and α. Compare equity, debt, risk-neutral N(−d₂), physical distance-to-default and physical EDF.",
           "formulas": [
             "E_0=V_0N(d_1)-De^{-rT}N(d_2)",
@@ -526,7 +526,7 @@ export const CONTENT = {
         "kmv": {
           "title": "KMV-style inversion",
           "theory": "Firm value and firm volatility are not directly observed. The lecture therefore solves two equations in V₀ and σ_V: the Merton equity-value equation and the equity-volatility relation N(d₁)σ_VV₀=σ_EE₀. Once V₀ and σ_V are inferred, the model gives risky debt value, default probability and the continuously compounded debt yield and credit spread.",
-          "how_to": "Enter observed E₀ and σ_E together with D, r and T. Use the lecture benchmark E₀=3, σ_E=0.8, D=10, r=5%, T=1 to verify the inversion before experimenting.",
+          "how_to": "Enter observed $E_0$ and $\\sigma_E$ together with $D$, $r$ and $T$. Use the lecture benchmark $E_0=3$, $\\sigma_E=0.8$, $D=10$, $r=5\\%$, $T=1$ to verify the inversion before experimenting. The lab also explains the lecture credit-spread rounding: 1.19% follows from the rounded risky debt value 9.40, while the unrounded internally consistent calculation is about 1.2366%.",
           "formulas": [
             "N(d_1)\\sigma_VV_0=\\sigma_EE_0",
             "Spread=y-r"
@@ -563,13 +563,13 @@ export const CONTENT = {
         "id": "forward_payoff",
         "module_id": "forward",
         "title": "Long-forward payoff",
-        "prompt": "A long forward has F₀,T = 50. If S_T = 55, what is the payoff at T?",
+        "prompt": "A long forward has $F_{0,T}=50$. If $S_T=55$, what is the payoff at $T$?",
         "kind": "numeric",
-        "answer": 5.0,
-        "tolerance": 1e-09,
+        "answer": 5,
+        "tolerance": 1e-9,
         "options": [],
         "unit": "currency units",
-        "hint": "Use S_T − F₀,T.",
+        "hint": "Use $S_T-F_{0,T}$.",
         "solution": "55 − 50 = 5.",
         "source_anchor": "Lecture 01 — Payoff of a Forward Contract."
       },
@@ -577,10 +577,10 @@ export const CONTENT = {
         "id": "forward_direction",
         "module_id": "forward",
         "title": "Arbitrage direction",
-        "prompt": "If the observed market forward is above S₀exp[(r−δ)T], which lecture strategy is indicated?",
+        "prompt": "If the observed market forward is above $S_0e^{(r-\\delta)T}$, which lecture strategy is indicated?",
         "kind": "choice",
         "answer": "Cash-and-carry",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Cash-and-carry",
           "Reverse cash-and-carry",
@@ -614,7 +614,7 @@ export const CONTENT = {
         "prompt": "An airline will purchase jet fuel in the future. Which futures direction hedges a price increase?",
         "kind": "choice",
         "answer": "Long futures",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Long futures",
           "Short futures"
@@ -633,7 +633,7 @@ export const CONTENT = {
         "prompt": "Which strategy combines a long call and a long put with the same strike to gain from a sufficiently large move in either direction?",
         "kind": "choice",
         "answer": "Straddle",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Bull Spread",
           "Straddle",
@@ -651,8 +651,8 @@ export const CONTENT = {
         "title": "Butterfly middle leg",
         "prompt": "In the call butterfly used in the lab, what is the quantity of the middle-strike call?",
         "kind": "numeric",
-        "answer": -2.0,
-        "tolerance": 1e-09,
+        "answer": -2,
+        "tolerance": 1e-9,
         "options": [],
         "unit": "calls",
         "hint": "The standard lecture construction buys the low/high strikes and sells twice the middle strike.",
@@ -682,7 +682,7 @@ export const CONTENT = {
         "prompt": "At an American-option node, which value determines the option price?",
         "kind": "choice",
         "answer": "max(intrinsic value, continuation value)",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "continuation value only",
           "intrinsic value only",
@@ -716,7 +716,7 @@ export const CONTENT = {
         "prompt": "Which drift is used for the ex-dividend stock when Monte Carlo is used for arbitrage-free option pricing?",
         "kind": "choice",
         "answer": "r − δ",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "μ",
           "r − δ",
@@ -735,8 +735,8 @@ export const CONTENT = {
         "title": "Gamma-neutral quantity",
         "prompt": "If Γ₁=0.020 for the sold call and Γ₂=0.010 for the hedge call, what q² makes portfolio Gamma zero?",
         "kind": "numeric",
-        "answer": 2.0,
-        "tolerance": 1e-09,
+        "answer": 2,
+        "tolerance": 1e-9,
         "options": [],
         "unit": "hedge calls",
         "hint": "Use q²=Γ₁/Γ₂ because q¹=−1.",
@@ -750,7 +750,7 @@ export const CONTENT = {
         "prompt": "With positive proportional transaction costs, is P&L risk guaranteed to improve monotonically as rebalancing becomes more frequent?",
         "kind": "choice",
         "answer": "No",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Yes",
           "No"
@@ -783,7 +783,7 @@ export const CONTENT = {
         "prompt": "If the constant-volatility Black-Scholes model were exactly correct for all strikes and maturities, what would its implied-volatility surface look like?",
         "kind": "choice",
         "answer": "Flat at σ",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Flat at σ",
           "Always U-shaped",
@@ -803,7 +803,7 @@ export const CONTENT = {
         "prompt": "With k=2, θ=0.04 and σ=0.30, compute 2kθ−σ². Is the lecture condition 2kθ>σ² satisfied? Enter the difference.",
         "kind": "numeric",
         "answer": 0.07,
-        "tolerance": 1e-09,
+        "tolerance": 1e-9,
         "options": [],
         "unit": "",
         "hint": "Positive 2kθ−σ² means the stated condition holds.",
@@ -817,7 +817,7 @@ export const CONTENT = {
         "prompt": "According to the lecture, what does a negative ρ tend to induce in the return distribution?",
         "kind": "choice",
         "answer": "Negative skewness",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "Negative skewness",
           "Positive skewness",
@@ -837,7 +837,7 @@ export const CONTENT = {
         "prompt": "For m=−0.10 and δ=0.20, what is k=E[Y−1]=exp(m+δ²/2)−1?",
         "kind": "numeric",
         "answer": -0.07688365361336424,
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [],
         "unit": "",
         "hint": "Compute m+δ²/2 before exponentiating.",
@@ -851,7 +851,7 @@ export const CONTENT = {
         "prompt": "What happens to the Merton jump-diffusion pricing model when λ=0?",
         "kind": "choice",
         "answer": "It reduces to Black-Scholes",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "It reduces to Black-Scholes",
           "It becomes Heston",
@@ -885,7 +885,7 @@ export const CONTENT = {
         "prompt": "In the one-period Merton structural model used in the lecture, when does default occur at maturity?",
         "kind": "choice",
         "answer": "V(T) < D",
-        "tolerance": 1e-06,
+        "tolerance": 0.000001,
         "options": [
           "V(T) < D",
           "V(T) > D",

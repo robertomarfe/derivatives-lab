@@ -1,4 +1,4 @@
-import { simulateGbmPaths, monteCarloEuropeanPrice, simulateHedging, simulateHestonPaths, simulateMertonPaths } from './core/finance.js';
+import { simulateGbmPaths, monteCarloEuropeanPrice, simulateHedging, simulateHedgingPath, simulateHestonPaths, simulateMertonPaths } from './core/finance.js';
 self.onmessage = (ev) => {
   const {id,type,args} = ev.data;
   try {
@@ -6,6 +6,7 @@ self.onmessage = (ev) => {
     if(type==='gbm') result=simulateGbmPaths(...args);
     else if(type==='mc') result=monteCarloEuropeanPrice(...args);
     else if(type==='hedging') result=simulateHedging(...args);
+    else if(type==='hedgingPath') result=simulateHedgingPath(...args);
     else if(type==='hestonSim') result=simulateHestonPaths(...args);
     else if(type==='mertonSim') result=simulateMertonPaths(...args);
     else throw new Error(`Unknown worker task: ${type}`);
