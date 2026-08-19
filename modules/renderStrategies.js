@@ -17,7 +17,7 @@ export function renderStrategies(root){
     if(t==='presets'){
       const sub=m.submodules.presets;
       r.innerHTML=section(sub,controlGrid(
-        selectField('Preset','st-preset',['Bull Spread','Collar','Collared Stock','Straddle','Strangle','Butterfly Spread','Ratio Spread'],s.preset)+
+        selectField('Preset','st-preset',['Bull Spread','Collar','Collared Stock (extension)','Straddle','Strangle','Butterfly Spread','Ratio Spread'],s.preset)+
         field('$K_{low}$','st-kl',s.kl,{min:.000001})+
         field('$K_{ATM}$','st-ka',s.ka,{min:.000001})+
         field('$K_{high}$','st-kh',s.kh,{min:.000001})+
@@ -26,7 +26,8 @@ export function renderStrategies(root){
 
       const update=safeUpdate(r,()=>{
         s.preset=getv('st-preset');s.kl=getn('st-kl');s.ka=getn('st-ka');s.kh=getn('st-kh');s.ratio=Math.round(getn('st-ratio'));
-        const legs=F.strategyPreset(s.preset,s.kl,s.ka,s.kh,s.ratio);
+        const presetName=s.preset==='Collared Stock (extension)'?'Collared Stock':s.preset;
+        const legs=F.strategyPreset(presetName,s.kl,s.ka,s.kh,s.ratio);
         const strikes=legs.filter(l=>l.instrument!=='underlying').map(l=>l.strike);
         const [lo,hi]=adaptiveDomainFromStrikes(strikes,{fallback:s.ka,pad:.8,minFloor:0});
         const x=linspace(lo,hi,241);
@@ -58,7 +59,7 @@ export function renderStrategies(root){
     else {
       const sub=m.submodules.profit;
       r.innerHTML=section(sub,controlGrid(
-        selectField('Preset','pf-preset',['Bull Spread','Collar','Collared Stock','Straddle','Strangle','Butterfly Spread','Ratio Spread'],s.preset)+
+        selectField('Preset','pf-preset',['Bull Spread','Collar','Collared Stock (extension)','Straddle','Strangle','Butterfly Spread','Ratio Spread'],s.preset)+
         field('Net initial cost $C_0$','pf-cost',s.netCost,{step:.5})+
         field('Risk-free rate $r$','pf-r',s.r,{step:.005})+
         field('Maturity $T$','pf-T',s.T,{step:.25,min:0})
@@ -66,7 +67,8 @@ export function renderStrategies(root){
 
       const update=safeUpdate(r,()=>{
         s.preset=getv('pf-preset');s.netCost=getn('pf-cost');s.r=getn('pf-r');s.T=getn('pf-T');
-        const legs=F.strategyPreset(s.preset,s.kl,s.ka,s.kh,s.ratio);
+        const presetName=s.preset==='Collared Stock (extension)'?'Collared Stock':s.preset;
+        const legs=F.strategyPreset(presetName,s.kl,s.ka,s.kh,s.ratio);
         const strikes=legs.filter(l=>l.instrument!=='underlying').map(l=>l.strike);
         const [lo,hi]=adaptiveDomainFromStrikes(strikes,{fallback:s.ka,pad:.8,minFloor:0});
         const x=linspace(lo,hi,241),pay=x.map(ST=>F.portfolioPayoff(ST,legs));

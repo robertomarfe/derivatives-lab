@@ -1,6 +1,6 @@
 import { CONTENT } from '../content.js';
 import * as F from '../core/finance.js';
-import { lineChart, binomialTreeChart } from '../core/charts.js';
+import { lineChart, binomialTreeChart } from '../core/charts-v111.js';
 import { field, selectField, table, metric, interpretation, qs, getn, getv, num, money } from '../core/ui.js';
 import { st, tabbed, controlGrid, chartBox, section, safeUpdate } from './common.js';
 
@@ -21,8 +21,8 @@ export function renderBinomial(root){
         const b=F.priceBinomial(s.S,s.K,s.r,s.sigma,s.T,s.n,s.delta,s.type,s.style);
         qs('#bi-metrics',r).innerHTML=metric('Option price',money(b.price,6))+metric('$u$',num(b.u,6))+metric('$d$',num(b.d,6))+metric('$p^*$',num(b.p,6))+metric('Root $\\Delta$',Number.isFinite(b.deltaTree[0][0])?num(b.deltaTree[0][0],6):'exercise')+metric('Root $B$',Number.isFinite(b.bondTree[0][0])?money(b.bondTree[0][0],6):'exercise');
         binomialTreeChart(qs('#bi-tree',r),b,5);
-        const rows=[];for(let i=0;i<Math.min(s.n,4);i++)for(let j=0;j<=i;j++)rows.push([i,j,money(b.stockTree[i][j],3),money(b.optionTree[i][j],4),Number.isFinite(b.continuationTree[i][j])?money(b.continuationTree[i][j],4):'—',money(b.intrinsicTree[i][j],4),b.exerciseTree[i][j]?'Exercise':'Continue']);
-        qs('#bi-node',r).innerHTML=table(['$i$','$j$','$S$','$V$','Continuation','Intrinsic','Decision'],rows,'First nodes of the binomial tree');
+        const rows=[];for(let i=0;i<Math.min(s.n,4);i++)for(let j=0;j<=i;j++)rows.push([i,j,money(b.stockTree[i][j],3),money(b.optionTree[i][j],4),Number.isFinite(b.continuationTree[i][j])?money(b.continuationTree[i][j],4):'—',money(b.intrinsicTree[i][j],4),Number.isFinite(b.deltaTree[i][j])?num(b.deltaTree[i][j],5):'—',Number.isFinite(b.bondTree[i][j])?money(b.bondTree[i][j],5):'—',b.exerciseTree[i][j]?'Exercise':'Continue']);
+        qs('#bi-node',r).innerHTML=table(['$i$','$j$','$S$','$V$','Continuation','Intrinsic','$\\Delta$','$B$','Decision'],rows,'First nodes of the binomial tree');
       });
       ['bi-S','bi-K','bi-r','bi-sig','bi-T','bi-n','bi-d','bi-type','bi-style'].forEach(id=>r.querySelector(`#${id}`)?.addEventListener('input',update));
       update();

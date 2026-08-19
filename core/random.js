@@ -1,3 +1,4 @@
+import { logGamma } from './special.js';
 // Deterministic browser/Node RNG so experiments are reproducible across devices.
 export function makeRng(seed = 12345) {
   let x = (seed >>> 0) || 1;
@@ -17,17 +18,29 @@ export function makeRng(seed = 12345) {
     return r * Math.cos(theta);
   }
   function poisson(lambda) {
-    if (lambda <= 0) return 0;
-    if (lambda < 30) {
+    if (!Number.isFinite(lambda) || lambda < 0) throw new Error('Poisson mean must be a non-negative finite number');
+    if (lambda === 0) return 0;
+    if (lambda < 10) {
+      // Knuth inversion is exact and efficient for small means.
       const L = Math.exp(-lambda);
       let k = 0, p = 1;
       do { k++; p *= uniform(); } while (p > L);
       return k - 1;
     }
-    // Normal proposal is accurate for the large lambdas used only in CIR mixtures.
-    let k;
-    do { k = Math.floor(lambda + Math.sqrt(lambda) * normal() + 0.5); } while (k < 0);
-    return k;
+    // PTRS transformed rejection (Hörmann): exact Poisson sampling without
+    // the large-lambda normal approximation used in v1.1.
+    const slam=Math.sqrt(lambda), loglam=Math.log(lambda);
+    const b=0.931+2.53*slam, a=-0.059+0.02483*b;
+    const invAlpha=1.1239+1.1328/(b-3.4), vR=0.9277-3.6224/(b-2);
+    while(true){
+      const u=uniform()-0.5, v=uniform(), us=0.5-Math.abs(u);
+      const k=Math.floor((2*a/us+b)*u+lambda+0.43);
+      if(us>=0.07 && v<=vR) return k;
+      if(k<0 || (us<0.013 && v>us)) continue;
+      const lhs=Math.log(v*invAlpha/(a/(us*us)+b));
+      const rhs=-lambda+k*loglam-logGamma(k+1);
+      if(lhs<=rhs) return k;
+    }
   }
   function gamma(shape) {
     if (shape <= 0) throw new Error('Gamma shape must be positive');
