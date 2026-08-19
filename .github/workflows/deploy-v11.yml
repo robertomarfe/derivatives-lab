@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/deploy-v11.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -39,4 +40,4 @@ jobs:
           git commit -m 'Deploy Derivatives Lab Web v1.1'
           git push
 
-# v1.1 deployment trigger
+# PR-triggered deployment handoff
