@@ -13,23 +13,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Reconstruct and verify validated v1.1 distribution
+      - name: Verify validated v1.1 distribution
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          parts=(.deploy/v11_part_*.b64)
-          if [ ${#parts[@]} -eq 0 ]; then
-            echo 'No validated v1.1 deployment chunks were found.' >&2
+          ARCHIVE=.deploy/DerivativesLab_Web_v1_1_DIST.zip
+          if [ ! -f "$ARCHIVE" ]; then
+            echo "Missing $ARCHIVE" >&2
             exit 1
           fi
-          cat "${parts[@]}" > /tmp/DerivativesLab_Web_v1_1_DIST.b64
-          base64 --decode /tmp/DerivativesLab_Web_v1_1_DIST.b64 > /tmp/DerivativesLab_Web_v1_1_DIST.zip
-          echo 'e449fd8a4cf8597fcc2c87b4e50535617bebdcab05ed0884e825a8f3843d91bc  /tmp/DerivativesLab_Web_v1_1_DIST.zip' | sha256sum -c -
-          unzip -t /tmp/DerivativesLab_Web_v1_1_DIST.zip
+          echo 'e449fd8a4cf8597fcc2c87b4e50535617bebdcab05ed0884e825a8f3843d91bc  .deploy/DerivativesLab_Web_v1_1_DIST.zip' | sha256sum -c -
+          unzip -t "$ARCHIVE"
           rm -rf /tmp/dlab-v11
           mkdir -p /tmp/dlab-v11
-          unzip -q /tmp/DerivativesLab_Web_v1_1_DIST.zip -d /tmp/dlab-v11
+          unzip -q "$ARCHIVE" -d /tmp/dlab-v11
 
       - name: Install static distribution
         shell: bash
