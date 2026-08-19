@@ -24,6 +24,7 @@ export function makeRng(seed = 12345) {
       do { k++; p *= uniform(); } while (p > L);
       return k - 1;
     }
+    // Normal proposal is accurate for the large lambdas used only in CIR mixtures.
     let k;
     do { k = Math.floor(lambda + Math.sqrt(lambda) * normal() + 0.5); } while (k < 0);
     return k;
@@ -47,6 +48,7 @@ export function makeRng(seed = 12345) {
   }
   function chiSquare(df) { return 2 * gamma(df / 2); }
   function noncentralChiSquare(df, nonc) {
+    // Exact Poisson-mixture representation.
     const n = poisson(nonc / 2);
     return chiSquare(df + 2 * n);
   }

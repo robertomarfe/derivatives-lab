@@ -4,6 +4,7 @@ export function normPdf(x) {
   return Math.exp(-0.5 * x * x) / SQRT2PI;
 }
 
+// Abramowitz-Stegun-style erf approximation; max error is ample for teaching/pricing UI.
 export function erf(x) {
   const sign = x < 0 ? -1 : 1;
   const a1 = 0.254829592;
