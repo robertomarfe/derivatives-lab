@@ -1,4 +1,4 @@
-const CACHE='derivatives-lab-v1.1.1-homecopy-20260820';
+const CACHE='derivatives-lab-v1.1.1-homeboxes-removed-20260820';
 const ASSETS=["./","./index.html","./styles.css","./styles-v111.css","./app.js","./bootstrap-v111.js","./content-v111-patch.js","./content.js","./worker.js","./manifest.webmanifest","./assets/icon-192.png","./assets/icon-512.png","./assets/icon.svg","./core/charts.js","./core/charts-v111.js","./core/complex.js","./core/finance.js","./core/finance-v111.js","./core/math.js","./core/random.js","./core/special.js","./core/ui.js","./core/validation.js","./core/worker-client.js","./modules/common.js","./modules/renderBinomial.js","./modules/renderBlackScholes.js","./modules/renderForward.js","./modules/renderFutures.js","./modules/renderHedging.js","./modules/renderHeston.js","./modules/renderImplied.js","./modules/renderMertonCredit.js","./modules/renderMertonJump.js","./modules/renderStrategies.js","./modules/renderers.js","./vendor/katex/katex.css","./vendor/katex/katex.mjs"];
 
 self.addEventListener('install',event=>{
