@@ -1,0 +1,10 @@
+name: NP bridge trigger test
+on:
+  push:
+    branches: [neural-projections-data-bridge-v067]
+    paths: ['np_bridge/TRIGGER.txt']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo NP_BRIDGE_TRIGGER_OK
